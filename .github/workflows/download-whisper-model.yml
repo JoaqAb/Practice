@@ -1,0 +1,25 @@
+name: Download Whisper Model
+
+on:
+  push:
+    paths:
+      - '.github/workflows/download-whisper-model.yml'
+  workflow_dispatch:
+
+jobs:
+  download-model:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download multilingual tiny model
+        run: |
+          curl -L --fail --retry 5 \
+            -o ggml-tiny-q5_1.bin \
+            https://github.com/w3xgroup/taskurio-models/releases/download/whisper-models-v1/ggml-tiny-q5_1.bin
+          echo "818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7  ggml-tiny-q5_1.bin" | sha256sum -c -
+
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: whisper-tiny-q5_1-model
+          path: ggml-tiny-q5_1.bin
+          retention-days: 1
