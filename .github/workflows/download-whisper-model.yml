@@ -1,9 +1,7 @@
 name: Download Whisper Model
 
 on:
-  push:
-    paths:
-      - '.github/workflows/download-whisper-model.yml'
+  pull_request:
   workflow_dispatch:
 
 jobs:
